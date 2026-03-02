@@ -3,349 +3,232 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sravan Kumar Reddy - Frontend Developer</title>
+    <title>Sravan Kumar Reddy | Frontend Engineer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
     <style>
+        :root {
+            --bg: #050505;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.1);
+            --accent-1: #00f2ea; /* Cyber Blue */
+            --accent-2: #00ff88; /* Emerald */
+            --text-main: #f5f5f7;
+            --text-dim: #a1a1a6;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            cursor: default;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #0a0a0a;
-            color: #fff;
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text-main);
+            line-height: 1.6;
             overflow-x: hidden;
         }
 
+        /* Subtle Grain Effect */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: url('https://grainy-gradients.vercel.app/noise.svg');
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* --- Navigation --- */
         .nav {
             position: fixed;
-            top: 0;
-            width: 100%;
-            padding: 20px 50px;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 1200px;
+            padding: 15px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             z-index: 1000;
-            background: rgba(10, 10, 10, 0.8);
-            backdrop-filter: blur(10px);
+            background: rgba(10, 10, 10, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 100px;
         }
 
         .logo {
-            font-size: 24px;
-            font-weight: bold;
-            background: linear-gradient(45deg, #00ff88, #00ccff);
+            font-weight: 800;
+            font-size: 20px;
+            letter-spacing: -1px;
+            background: linear-gradient(to right, var(--accent-1), var(--accent-2));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         .nav-links {
             display: flex;
-            gap: 30px;
+            gap: 25px;
         }
 
         .nav-links a {
-            color: #fff;
+            color: var(--text-dim);
             text-decoration: none;
-            transition: color 0.3s;
+            font-size: 14px;
+            font-weight: 500;
+            transition: 0.3s;
+            cursor: pointer;
         }
 
-        .nav-links a:hover {
-            color: #00ff88;
-        }
+        .nav-links a:hover { color: var(--accent-2); }
 
+        /* --- Hero --- */
         .hero {
             height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
-            overflow: hidden;
         }
 
         .hero-content {
             text-align: center;
             z-index: 2;
+            max-width: 800px;
         }
 
         .hero h1 {
-            font-size: 80px;
+            font-size: clamp(48px, 8vw, 90px);
+            font-weight: 800;
+            line-height: 1;
             margin-bottom: 20px;
-            background: linear-gradient(45deg, #00ff88, #00ccff, #ff00ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            letter-spacing: -4px;
         }
 
         .hero p {
-            font-size: 24px;
-            color: #ccc;
-            margin-bottom: 30px;
+            font-size: clamp(18px, 2vw, 24px);
+            color: var(--text-dim);
+            margin-bottom: 40px;
+            font-weight: 300;
         }
 
         .cta-btn {
-            padding: 15px 40px;
-            font-size: 18px;
-            background: linear-gradient(45deg, #00ff88, #00ccff);
+            padding: 18px 45px;
+            background: var(--text-main);
+            color: var(--bg);
             border: none;
-            border-radius: 50px;
-            color: #000;
-            font-weight: bold;
+            border-radius: 100px;
+            font-weight: 600;
+            font-size: 16px;
+            transition: 0.4s cubic-bezier(0.2, 1, 0.3, 1);
             cursor: pointer;
-            transition: transform 0.3s;
         }
 
         .cta-btn:hover {
-            transform: scale(1.05);
+            transform: scale(1.05) translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 255, 136, 0.2);
         }
 
         #canvas-bg {
             position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 1;
+            top: 0; left: 0;
+            opacity: 0.4;
         }
 
+        /* --- Bento Sections --- */
         section {
-            min-height: 100vh;
-            padding: 100px 50px;
-            position: relative;
-        }
-
-        .section-title {
-            font-size: 48px;
-            margin-bottom: 50px;
-            text-align: center;
-            background: linear-gradient(45deg, #00ff88, #00ccff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .skill-card {
-            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
-            padding: 30px;
-            border-radius: 15px;
-            border: 1px solid #333;
-            transition: transform 0.3s, border-color 0.3s;
-        }
-
-        .skill-card:hover {
-            transform: translateY(-10px);
-            border-color: #00ff88;
-        }
-
-        .skill-card h3 {
-            color: #00ff88;
-            margin-bottom: 15px;
-        }
-
-        .experience-timeline {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .experience-item {
-            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
-            padding: 40px;
-            margin-bottom: 30px;
-            border-radius: 15px;
-            border-left: 4px solid #00ff88;
-            position: relative;
-        }
-
-        .experience-item h3 {
-            color: #00ff88;
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-
-        .experience-item .company {
-            color: #00ccff;
-            font-size: 18px;
-            margin-bottom: 20px;
-        }
-
-        .experience-item ul {
-            list-style: none;
-            padding-left: 0;
-        }
-
-        .experience-item li {
-            padding: 10px 0;
-            padding-left: 25px;
-            position: relative;
-        }
-
-        .experience-item li:before {
-            content: "▹";
-            position: absolute;
-            left: 0;
-            color: #00ff88;
-        }
-
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
+            padding: 120px 5%;
             max-width: 1400px;
             margin: 0 auto;
         }
 
-        .project-card {
-            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
-            border-radius: 15px;
+        .section-title {
+            font-size: 42px;
+            font-weight: 800;
+            margin-bottom: 60px;
+            letter-spacing: -2px;
+        }
+
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: minmax(200px, auto);
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 40px;
+            transition: 0.4s;
+            position: relative;
             overflow: hidden;
-            border: 1px solid #333;
-            transition: transform 0.3s, border-color 0.3s;
         }
 
-        .project-card:hover {
-            transform: translateY(-10px);
-            border-color: #00ccff;
+        .card:hover {
+            border-color: var(--accent-1);
+            background: rgba(255, 255, 255, 0.05);
         }
 
-        .project-content {
-            padding: 30px;
-        }
+        /* Bento Span Logic */
+        .span-2 { grid-column: span 2; }
+        .span-3 { grid-column: span 3; }
+        .row-2 { grid-row: span 2; }
 
-        .project-card h3 {
-            color: #00ccff;
-            font-size: 22px;
-            margin-bottom: 10px;
-        }
-
-        .project-tech {
-            color: #00ff88;
-            font-size: 14px;
+        .card h3 {
+            color: var(--accent-2);
+            font-size: 24px;
             margin-bottom: 15px;
         }
 
-        .project-card ul {
-            list-style: none;
-            padding-left: 0;
+        .card p, .card li {
+            color: var(--text-dim);
+            font-size: 15px;
         }
 
-        .project-card li {
-            padding: 8px 0;
-            padding-left: 20px;
-            position: relative;
-            font-size: 14px;
-            color: #ccc;
-        }
-
-        .project-card li:before {
-            content: "•";
-            position: absolute;
-            left: 0;
-            color: #00ff88;
-        }
-
-        .contact {
-            text-align: center;
-        }
-
-        .contact-links {
+        /* --- Stats Bar --- */
+        .stats-container {
             display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-top: 50px;
+            justify-content: space-between;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            padding: 40px;
+            margin: 40px 0;
         }
 
-        .contact-link {
-            padding: 20px 40px;
-            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
-            border-radius: 15px;
-            color: #fff;
-            text-decoration: none;
-            border: 1px solid #333;
-            transition: all 0.3s;
-        }
-
-        .contact-link:hover {
-            border-color: #00ff88;
-            transform: translateY(-5px);
-        }
-
-        .parallax-section {
-            position: relative;
-            height: 400px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-
-        .parallax-bg {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, #00ff88, #00ccff, #ff00ff);
-            opacity: 0.1;
-        }
-
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
-            max-width: 1000px;
-            margin: 50px auto;
-        }
-
-        .stat-item {
-            text-align: center;
-            padding: 30px;
-            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
-            border-radius: 15px;
-            border: 1px solid #333;
-        }
-
+        .stat-item { text-align: left; }
         .stat-number {
-            font-size: 48px;
-            font-weight: bold;
-            background: linear-gradient(45deg, #00ff88, #00ccff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-size: 40px;
+            font-weight: 800;
+            color: var(--accent-1);
         }
 
-        .stat-label {
-            color: #ccc;
-            margin-top: 10px;
-        }
-
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 48px;
-            }
-            .nav {
-                padding: 20px;
-            }
-            section {
-                padding: 80px 20px;
-            }
-            .section-title {
-                font-size: 32px;
-            }
+        /* --- Responsive --- */
+        @media (max-width: 900px) {
+            .bento-grid { grid-template-columns: repeat(2, 1fr); }
+            .span-3, .span-2 { grid-column: span 2; }
+            .nav { width: 95%; padding: 10px 20px; }
         }
     </style>
 </head>
 <body>
+
     <nav class="nav">
-        <div class="logo">SK</div>
+        <div class="logo">SRAVAN.DEV</div>
         <div class="nav-links">
-            <a href="#about">About</a>
             <a href="#skills">Skills</a>
             <a href="#experience">Experience</a>
-            <a href="#projects">Projects</a>
+            <a href="#projects">Work</a>
             <a href="#contact">Contact</a>
         </div>
     </nav>
@@ -353,161 +236,56 @@
     <section class="hero">
         <canvas id="canvas-bg"></canvas>
         <div class="hero-content">
-            <h1>Sravan Kumar Reddy</h1>
-            <p>Frontend Developer | React.js & Next.js Specialist</p>
+            <h1>Crafting Digital <br><span style="color: var(--accent-2)">Intelligence.</span></h1>
+            <p>High-performance frontend engineer specializing in <br> React, GSAP, and AI-driven interfaces.</p>
             <button class="cta-btn" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">
-                Get In Touch
+                Start a Project
             </button>
         </div>
     </section>
 
-    <div class="parallax-section">
-        <div class="parallax-bg"></div>
-        <div class="stats">
-            <div class="stat-item">
-                <div class="stat-number">3+</div>
-                <div class="stat-label">Years Experience</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">2M+</div>
-                <div class="stat-label">Active Users Reached</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">40%</div>
-                <div class="stat-label">Performance Boost</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">20+</div>
-                <div class="stat-label">AI Tools Integrated</div>
-            </div>
-        </div>
-    </div>
-
     <section id="skills">
-        <h2 class="section-title">Technical Skills</h2>
-        <div class="skills-grid">
-            <div class="skill-card">
+        <h2 class="section-title">Technical Arsenal</h2>
+        <div class="bento-grid">
+            <div class="card span-2">
                 <h3>Frontend Core</h3>
-                <p>Next.js, React.js, JavaScript, TypeScript, HTML5, CSS3</p>
+                <p>Expertise in Next.js, React.js, and TypeScript. Focus on SSR, performance optimization, and scalable architecture.</p>
             </div>
-            <div class="skill-card">
-                <h3>State Management</h3>
-                <p>Redux, Zustand, React Query</p>
+            <div class="card">
+                <h3>Graphics</h3>
+                <p>GSAP, Fabric.js, MapLibre for immersive 2D/3D web experiences.</p>
             </div>
-            <div class="skill-card">
-                <h3>UI Libraries</h3>
-                <p>MUI, Tailwind CSS, shadcn/ui, Bootstrap</p>
+            <div class="card">
+                <h3>State</h3>
+                <p>Redux, Zustand, React Query.</p>
             </div>
-            <div class="skill-card">
-                <h3>Animation & Graphics</h3>
-                <p>GSAP, Fabric.js, MapLibre</p>
-            </div>
-            <div class="skill-card">
-                <h3>Backend & APIs</h3>
-                <p>Node.js, Express.js, REST APIs, MongoDB, Firebase</p>
-            </div>
-            <div class="skill-card">
-                <h3>Tools & Payment</h3>
-                <p>Git, GitHub, VS Code, Stripe</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="experience">
-        <h2 class="section-title">Work Experience</h2>
-        <div class="experience-timeline">
-            <div class="experience-item">
-                <h3>Frontend Developer</h3>
-                <div class="company">Big AIR Lab - Bengaluru | Jun 2025 – Present</div>
-                <ul>
-                    <li>Pioneered a finance-focused chat system using Server-Sent Events (SSE), reducing data delivery latency by 35%</li>
-                    <li>Directed frontend development for Auditoron, improving audit efficiency by 20% through Slack-integrated compliance workflows</li>
-                    <li>Architected a high-performance parallax website using GSAP, increasing scroll engagement by 40%</li>
-                </ul>
-            </div>
-            <div class="experience-item">
-                <h3>SDE-1 Frontend</h3>
-                <div class="company">AppyHigh - Hyderabad | Mar 2022 – Aug 2024</div>
-                <ul>
-                    <li>Spearheaded development of the Phot.AI platform, integrating 20+ AI tools and scaling to 2M+ active users</li>
-                    <li>Launched Scanner-Go document conversion platform, achieving 500 daily paid subscribers</li>
-                    <li>Constructed an AdMob Dashboard using server-driven architecture, optimizing ad delivery for 100+ apps</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <section id="projects">
-        <h2 class="section-title">Featured Projects</h2>
-        <div class="projects-grid">
-            <div class="project-card">
-                <div class="project-content">
-                    <h3>Insight Agent</h3>
-                    <div class="project-tech">Next.js • TypeScript • TipTap • MongoDB</div>
-                    <ul>
-                        <li>Orchestrated four specialized AI models for financial insights</li>
-                        <li>Implemented real-time Server-Sent Events for report rendering</li>
-                        <li>Reduced visualization wait times by 40%</li>
-                        <li>Built secure workflows with 99.9% session stability</li>
-                    </ul>
+            <div class="card span-3">
+                <div class="stats-container" style="border: none; padding: 0; margin: 0; background: none;">
+                    <div class="stat-item">
+                        <div class="stat-number">3+</div>
+                        <div class="stat-label">Years Exp</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">2M+</div>
+                        <div class="stat-label">Users</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">40%</div>
+                        <div class="stat-label">Speed Up</div>
+                    </div>
                 </div>
             </div>
-            <div class="project-card">
-                <div class="project-content">
-                    <h3>Auditoron</h3>
-                    <div class="project-tech">Next.js • TypeScript • Tailwind CSS • Slack APIs</div>
-                    <ul>
-                        <li>Designed dashboard monitoring 10,000+ daily communications</li>
-                        <li>Implemented Slack-integrated workflows</li>
-                        <li>Reduced manual response times by 50%</li>
-                        <li>Zero UI lag during high-volume processing</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="project-card">
-                <div class="project-content">
-                    <h3>Phot.AI</h3>
-                    <div class="project-tech">Next.js • Fabric.js • Firebase • Stripe</div>
-                    <ul>
-                        <li>Enhanced object and background removal features</li>
-                        <li>Reduced user processing time by 40%</li>
-                        <li>Improved workflows using Fabric.js</li>
-                        <li>Optimized page load time by 30%</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="project-card">
-                <div class="project-content">
-                    <h3>Scanner-Go</h3>
-                    <div class="project-tech">React.js • Redux • Socket.IO • Firebase</div>
-                    <ul>
-                        <li>Managed 500K+ monthly document conversions</li>
-                        <li>99.9% success rate</li>
-                        <li>Real-time Socket.IO updates</li>
-                        <li>Added i18n support for global reach</li>
-                    </ul>
-                </div>
+            <div class="card">
+                <h3>Backend</h3>
+                <p>Node.js, Express, MongoDB.</p>
             </div>
         </div>
-    </section>
-
-    <section id="contact" class="contact">
-        <h2 class="section-title">Let's Connect</h2>
-        <p style="font-size: 20px; color: #ccc; margin-bottom: 30px;">
-            Interested in collaborating? Let's build something amazing together.
-        </p>
-        <div class="contact-links">
-            <a href="mailto:sravankumarreddy102@gmail.com" class="contact-link">Email</a>
-            <a href="https://github.com/reddy-sravan12" target="_blank" class="contact-link">GitHub</a>
-            <a href="https://linkedin.com/in/sravan-kumar-reddy" target="_blank" class="contact-link">LinkedIn</a>
-        </div>
-        <p style="margin-top: 50px; color: #666;">+91 8466843929</p>
     </section>
 
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
-        // Fabric.js animated background
+        // Refined Background Particles
         const canvas = new fabric.Canvas('canvas-bg', {
             width: window.innerWidth,
             height: window.innerHeight,
@@ -515,19 +293,19 @@
         });
 
         const particles = [];
-        for (let i = 0; i < 50; i++) {
+        for (let i = 0; i < 40; i++) {
             const circle = new fabric.Circle({
-                radius: Math.random() * 3 + 1,
-                fill: Math.random() > 0.5 ? '#00ff88' : '#00ccff',
+                radius: Math.random() * 2 + 0.5,
+                fill: i % 2 === 0 ? '#00f2ea' : '#00ff88',
                 left: Math.random() * canvas.width,
                 top: Math.random() * canvas.height,
-                opacity: Math.random() * 0.5 + 0.2,
+                opacity: Math.random() * 0.3,
                 selectable: false
             });
             particles.push({
                 obj: circle,
-                speedX: (Math.random() - 0.5) * 0.5,
-                speedY: (Math.random() - 0.5) * 0.5
+                speedX: (Math.random() - 0.5) * 0.3,
+                speedY: (Math.random() - 0.5) * 0.3
             });
             canvas.add(circle);
         }
@@ -536,7 +314,6 @@
             particles.forEach(p => {
                 p.obj.left += p.speedX;
                 p.obj.top += p.speedY;
-
                 if (p.obj.left < 0 || p.obj.left > canvas.width) p.speedX *= -1;
                 if (p.obj.top < 0 || p.obj.top > canvas.height) p.speedY *= -1;
             });
@@ -545,102 +322,25 @@
         }
         animate();
 
-        window.addEventListener('resize', () => {
-            canvas.setWidth(window.innerWidth);
-            canvas.setHeight(window.innerHeight);
-        });
-
-        // GSAP Animations
-        gsap.from('.hero-content', {
-            duration: 1,
-            y: 100,
+        // Reveal Animations
+        gsap.from('.hero-content h1', {
+            duration: 1.5,
+            y: 50,
             opacity: 0,
-            ease: 'power3.out'
+            ease: "power4.out",
+            delay: 0.2
         });
 
-        gsap.from('.nav', {
-            duration: 1,
-            y: -100,
-            opacity: 0,
-            ease: 'power3.out',
-            delay: 0.5
-        });
-
-        // Skill cards animation
-        gsap.from('.skill-card', {
+        gsap.from('.card', {
             scrollTrigger: {
-                trigger: '.skills-grid',
-                start: 'top 80%'
+                trigger: '.bento-grid',
+                start: 'top 85%'
             },
-            duration: 0.8,
-            y: 100,
+            duration: 1,
+            y: 60,
             opacity: 0,
             stagger: 0.1,
-            ease: 'power3.out'
-        });
-
-        // Experience timeline animation
-        gsap.from('.experience-item', {
-            scrollTrigger: {
-                trigger: '.experience-timeline',
-                start: 'top 80%'
-            },
-            duration: 0.8,
-            x: -100,
-            opacity: 0,
-            stagger: 0.3,
-            ease: 'power3.out'
-        });
-
-        // Project cards animation
-        gsap.from('.project-card', {
-            scrollTrigger: {
-                trigger: '.projects-grid',
-                start: 'top 80%'
-            },
-            duration: 0.8,
-            scale: 0.8,
-            opacity: 0,
-            stagger: 0.2,
-            ease: 'back.out(1.7)'
-        });
-
-        // Stats counter animation
-        const statNumbers = document.querySelectorAll('.stat-number');
-        statNumbers.forEach(stat => {
-            const text = stat.textContent;
-            ScrollTrigger.create({
-                trigger: stat,
-                start: 'top 80%',
-                onEnter: () => {
-                    gsap.to(stat, {
-                        duration: 2,
-                        innerHTML: text,
-                        snap: { innerHTML: 1 },
-                        ease: 'power1.out'
-                    });
-                }
-            });
-        });
-
-        // Parallax effect
-        gsap.to('.parallax-bg', {
-            scrollTrigger: {
-                trigger: '.parallax-section',
-                start: 'top bottom',
-                end: 'bottom top',
-                scrub: true
-            },
-            y: -200
-        });
-
-        // Smooth scroll for navigation
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const target = document.querySelector(link.getAttribute('href'));
-                target.scrollIntoView({ behavior: 'smooth' });
-            });
+            ease: "power3.out"
         });
     </script>
 </body>
